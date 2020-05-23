@@ -1,4 +1,4 @@
 import React from 'react'
-import { App } from '../src/App'
+import { FooTube } from '../src/FooTube'
 
-export const Dev = () => <App />
+export const Dev = () => <FooTube />
