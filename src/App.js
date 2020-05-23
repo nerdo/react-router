@@ -1,9 +1,9 @@
 import React from 'react'
 
-export const Boilerplate = function () {
+export const App = function () {
   return (
     <div>
-      Boilerplate
+      App
     </div>
   )
 }

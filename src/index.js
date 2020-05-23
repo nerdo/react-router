@@ -1,1 +1,1 @@
-export { Boilerplate } from './Boilerplate'
+export { App } from './App'

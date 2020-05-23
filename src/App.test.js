@@ -1,10 +1,10 @@
 import React from 'react'
 import { render } from '@testing-library/react'
-import { Boilerplate } from './Boilerplate'
+import { App } from './App'
 
-describe('Boilerplate', () => {
+describe('App', () => {
   it('should render a wrapping <div />', () => {
-    const { container } = render(<Boilerplate />)
+    const { container } = render(<App />)
     expect(container.firstChild.nodeName).toBe('DIV')
   })
 })

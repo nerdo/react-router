@@ -1,10 +1,10 @@
 {
-  "name": "react-component-boilerplate",
-  "description": "",
-  "author": "",
+  "name": "@nerdo/react-routing",
+  "description": "A React adapter for @nerdo/js-routing.",
+  "author": "Dannel Albert <cuebix@gmail.com>",
   "license": "MIT",
   "repository": {
-    "url": "https://github.com/nerdo/react-component-boilerplate.git"
+    "url": "https://github.com/nerdo/react-routing.git"
   },
   "version": "0.0.1-alpha.0",
   "main": "dist/index.js",

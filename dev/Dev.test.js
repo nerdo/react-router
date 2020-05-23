@@ -1,10 +1,10 @@
 import React from 'react'
 import { render } from '@testing-library/react'
 import { Dev } from './Dev'
-import { Boilerplate } from '../src/Boilerplate'
+import { App } from '../src/App'
 
 describe('Dev', () => {
-  it('should render a Boilerplate component', () => {
+  it('should render an App component', () => {
     const { container } = render(<Dev />)
     expect(container).toBeDefined()
   })
