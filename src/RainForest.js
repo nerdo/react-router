@@ -7,6 +7,7 @@ import { ComputersPage } from './ComputersPage'
 import { RainForestRouterContext } from './RainForestRouterContext'
 import { ProductPage } from './ProductPage'
 import { NotFoundPage } from './NotFoundPage'
+import { LiveStreamsPage } from './LiveStreamsPage'
 
 const routes = [
   {
@@ -24,6 +25,11 @@ const routes = [
   {
     id: '/product/:productId',
     action: ({ productId }, options) => <ProductPage productId={productId} options={options} />
+  },
+  {
+    id: '/live',
+    isNest: true,
+    action: () => <LiveStreamsPage />
   }
 ]
 
@@ -41,6 +47,7 @@ export const RainForest = ({ router = makeReactUrlRouter() }) => {
       <nav aria-label='main'>
         <button onClick={() => navigate('/')}>Home</button>
         <button onClick={() => navigate('/categories/computers')}>Computers</button>
+        <button onClick={() => navigate('/live')}>Live Streams</button>
         <button onClick={() => navigate('/cart')}>Cart</button>
       </nav>
 

@@ -1,9 +1,9 @@
 import { makeUrlRouter } from '@nerdo/js-routing'
-import { makeUseRouting } from './makeUseRouting'
+import { makeUseUrlRouting } from './makeUseUrlRouting'
 
 export const makeReactUrlRouter = args => {
     const jsRouter = makeUrlRouter(args)
-    const useUrlRouting = makeUseRouting({ jsRouter })
+    const useUrlRouting = makeUseUrlRouting({ jsRouter })
 
     return {
         useUrlRouting,
