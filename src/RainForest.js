@@ -14,7 +14,7 @@ const routes = [
   }
 ]
 
-export const FooTube = ({ router = makeReactUrlRouter() }) => {
+export const RainForest = ({ router = makeReactUrlRouter() }) => {
   const [page, navigate] = router.useRouting(routes)
 
   return (
