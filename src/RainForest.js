@@ -23,7 +23,7 @@ const routes = [
   },
   {
     id: '/product/:productId',
-    action: ({ productId }) => <ProductPage productId={productId} />
+    action: ({ productId }, options) => <ProductPage productId={productId} options={options} />
   }
 ]
 
