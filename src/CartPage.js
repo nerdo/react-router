@@ -1,9 +1,9 @@
 import React from 'react'
 
-export const HomePage = () => {
+export const CartPage = () => {
   return (
     <>
-      <h2>Home</h2>
+      <h2>Cart</h2>
     </>
   )
 }

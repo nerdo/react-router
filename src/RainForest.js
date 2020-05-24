@@ -1,6 +1,6 @@
 import React from 'react'
 import { HomePage } from './HomePage'
-import { TrendingPage } from './TrendingPage'
+import { CartPage } from './CartPage'
 import { makeReactUrlRouter } from './makeReactUrlRouter'
 
 const routes = [
@@ -9,8 +9,8 @@ const routes = [
     action: () => <HomePage />
   },
   {
-    id: '/feed/trending',
-    action: () => <TrendingPage />
+    id: '/cart',
+    action: () => <CartPage />
   }
 ]
 
@@ -19,9 +19,11 @@ export const RainForest = ({ router = makeReactUrlRouter() }) => {
 
   return (
     <>
+      <h1>Rain Forest - The Online Shoppping Mega-Marketplace!</h1>
+
       <nav aria-label='main'>
         <button onClick={() => navigate('/')}>Home</button>
-        <button onClick={() => navigate('/feed/trending')}>Trending</button>
+        <button onClick={() => navigate('/cart')}>Cart</button>
       </nav>
 
       <div role="main">
