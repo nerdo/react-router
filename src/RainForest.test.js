@@ -22,4 +22,16 @@ describe('RainForest', () => {
       expect(screen.getByRole('heading', { name: 'Home' })).toBeInTheDocument()
     })
   })
+
+  describe('navigation to routes with parameters', () => {
+    it('should render correctly', async () => {
+      render(<RainForest />)
+      userEvent.click(screen.getByRole('button', { name: 'Computers'}))
+
+      expect(screen.getByRole('heading', {name: 'Computers'})).toBeInTheDocument()
+      userEvent.click(screen.getByRole('button', { name: 'PearBook Amateur' }))
+
+      expect(await screen.findByText('PBP-2020-01')).toBeInTheDocument()
+    })
+  })
 })

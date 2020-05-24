@@ -7,6 +7,7 @@ export const makeReactUrlRouter = args => {
 
     return {
         jsRouter,
-        useRouting
+        useRouting,
+        navigate: jsRouter.navigate
     }
 }
