@@ -6,8 +6,7 @@ export const makeReactUrlRouter = args => {
     const useRouting = makeUseRouting({ jsRouter })
 
     return {
-        jsRouter,
         useRouting,
-        navigate: jsRouter.navigate
+        ...jsRouter
     }
 }
