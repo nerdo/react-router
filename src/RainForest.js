@@ -32,7 +32,7 @@ export const RainForest = ({ router = makeReactUrlRouter() }) => {
     return <Loading />
   }
 
-  const [page, navigate] = router.useRouting(routes)
+  const [page, navigate] = router.useUrlRouting(routes)
 
   return (
     <RainForestRouterContext.Provider value={router}>

@@ -3,10 +3,10 @@ import { makeUseRouting } from './makeUseRouting'
 
 export const makeReactUrlRouter = args => {
     const jsRouter = makeUrlRouter(args)
-    const useRouting = makeUseRouting({ jsRouter })
+    const useUrlRouting = makeUseRouting({ jsRouter })
 
     return {
-        useRouting,
+        useUrlRouting,
         ...jsRouter
     }
 }

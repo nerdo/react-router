@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, screen } from '@testing-library/react'
+import { render, screen, act } from '@testing-library/react'
 import '@testing-library/jest-dom/extend-expect'
 import userEvent from '@testing-library/user-event'
 import { RainForest } from './RainForest'
@@ -35,7 +35,7 @@ describe('RainForest', () => {
 
       expect(await screen.findByText('PBP-2020-01')).toBeInTheDocument()
 
-      router.navigate(`${router.history.current.id}?color=black&size=15`)
+      await act(async () => router.navigate(`${router.history.current.id}?color=black&size=15`))
       expect(await screen.findByText('color=black')).toBeInTheDocument()
       expect(await screen.findByText('size=15')).toBeInTheDocument()
     })
