@@ -50,6 +50,7 @@ describe('RainForest', () => {
 
       userEvent.click(screen.getByRole('button', { name: 'Rain Forest Live Fitness' }))
       expect(screen.getByRole('heading', { name: 'Rain Forest Live Fitness' })).toBeInTheDocument()
+      expect(screen.getByText('ba9ec13d-0327-461e-9aff-9d7c024bcb74')).toBeInTheDocument()
 
       // Navigating to a non-nest after navigating to a nest should work with no side-effects...
       userEvent.click(screen.getByRole('button', { name: 'Home' }))
