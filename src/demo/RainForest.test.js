@@ -3,7 +3,7 @@ import { render, screen, act } from '@testing-library/react'
 import '@testing-library/jest-dom/extend-expect'
 import userEvent from '@testing-library/user-event'
 import { RainForest } from './RainForest'
-import { makeReactUrlRouter } from './makeReactUrlRouter'
+import { makeReactUrlRouter } from '../makeReactUrlRouter'
 
 describe('RainForest', () => {
   it('should render', () => {

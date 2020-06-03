@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { RainForest } from '../src/RainForest'
+import { RainForest } from '../src/demo/RainForest'
 import { makeReactUrlRouter } from '../src/makeReactUrlRouter'
 
 export const Dev = () => {
