@@ -26,5 +26,4 @@ export const LiveStreamsPage = ({ router = useContext(RainForestRouterContext) }
       </ol>
     </>
   )
-  return render
 }
