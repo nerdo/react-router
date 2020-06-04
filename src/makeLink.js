@@ -5,7 +5,7 @@ export const makeLink = ({ tag = 'button', toPropName = 'to', makeHandler } = {}
   return props => {
     const [handler] = useState(makeHandler)
     return (
-      <markup.tag {...props} onClick={e => handler(props[toPropName], e, props.onClick)}>
+      <markup.tag {...props} onClick={e => handler(props[toPropName], props.onClick, e)}>
         {props.children}
       </markup.tag>
     )

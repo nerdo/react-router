@@ -65,7 +65,7 @@ describe('makeLink()', () => {
       userEvent.click(screen.getByRole('button'))
 
       expect(handler).toHaveBeenCalledTimes(1)
-      expect(handler).toHaveBeenLastCalledWith('/to/somewhere', expect.objectContaining({}), onClick)
+      expect(handler).toHaveBeenLastCalledWith('/to/somewhere', onClick, expect.objectContaining({}))
     })
 
     it('should call the function with the ([toPropName], event, onClick) as input when clicked', () => {
@@ -78,7 +78,7 @@ describe('makeLink()', () => {
       userEvent.click(screen.getByRole('button'))
 
       expect(handler).toHaveBeenCalledTimes(1)
-      expect(handler).toHaveBeenLastCalledWith('/to/somewhere', expect.objectContaining({}), onClick)
+      expect(handler).toHaveBeenLastCalledWith('/to/somewhere', onClick, expect.objectContaining({}))
       expect(onClick).not.toHaveBeenCalled()
     })
   })
