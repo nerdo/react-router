@@ -38,17 +38,20 @@ export const RainForest = ({ router = makeReactUrlRouter() }) => {
     return <Loading />
   }
 
-  const [page, navigate] = router.useUrlRouting(routes)
+  router.Link = router.makeNavigationLink()
+  const { useUrlRouting, Link } = router
+
+  const page = useUrlRouting(routes)
 
   return (
     <RainForestRouterContext.Provider value={router}>
       <h1>Rain Forest - The Online Shoppping Mega-Marketplace!</h1>
 
       <nav aria-label='main'>
-        <button onClick={() => navigate('/')}>Home</button>
-        <button onClick={() => navigate('/categories/computers')}>Computers</button>
-        <button onClick={() => navigate('/live')}>Live Streams</button>
-        <button onClick={() => navigate('/cart')}>Cart</button>
+        <Link to='/'>Home</Link>
+        <Link to='/categories/computers'>Computers</Link>
+        <Link to='/live'>Live Streams</Link>
+        <Link to='/cart'>Cart</Link>
       </nav>
 
       <div role="main">

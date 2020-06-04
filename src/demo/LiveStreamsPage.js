@@ -10,7 +10,8 @@ const routes = [
 ]
 
 export const LiveStreamsPage = ({ router = useContext(RainForestRouterContext) }) => {
-  const [currentLiveStream, navigate] = router.useUrlRouting(routes)
+  const { useUrlRouting, Link } = router
+  const currentLiveStream = useUrlRouting(routes)
   const liveStreamHeader = currentLiveStream
     ? <h2>More Live Streams...</h2>
     : <h1>Live Streams</h1>
@@ -21,7 +22,7 @@ export const LiveStreamsPage = ({ router = useContext(RainForestRouterContext) }
       {liveStreamHeader}
       <ol>
         <li>
-          <button onClick={() => navigate('/broadcast/ba9ec13d-0327-461e-9aff-9d7c024bcb74')}>Rain Forest Live Fitness</button>
+          <Link to='/broadcast/ba9ec13d-0327-461e-9aff-9d7c024bcb74'>Rain Forest Live Fitness</Link>
         </li>
       </ol>
     </>
