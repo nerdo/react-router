@@ -41,12 +41,27 @@ describe('makeLink()', () => {
       expect(screen.getByTestId('the-link')).toBeInTheDocument()
     })
 
+    it('should call makeHandler once for each link', () => {
+      const makeHandler = jest.fn()
+      const onClick = void 0
+      const Link = makeLink({ makeHandler })
+      render(
+        <>
+          <Link to='/to/somewhere'>Somewhere</Link>
+          <Link to='/home'>Home</Link>
+        </>
+      )
+
+      expect(makeHandler).toHaveBeenCalledTimes(2)
+    })
+
     it('should call the function with the default to prop, and onClick event as input when clicked', () => {
       const handler = jest.fn()
+      const makeHandler = () => handler
       const onClick = void 0
-      const Link = makeLink({ handler })
-      render(<Link to='/to/somewhere' />)
+      const Link = makeLink({ makeHandler })
 
+      render(<Link to='/to/somewhere' />)
       userEvent.click(screen.getByRole('button'))
 
       expect(handler).toHaveBeenCalledTimes(1)
@@ -55,10 +70,11 @@ describe('makeLink()', () => {
 
     it('should call the function with the ([toPropName], event, onClick) as input when clicked', () => {
       const handler = jest.fn()
+      const makeHandler = () => handler
       const onClick = jest.fn()
-      const Link = makeLink({ handler, toPropName: 'target' })
-      render(<Link target='/to/somewhere' onClick={onClick} />)
+      const Link = makeLink({ makeHandler, toPropName: 'target' })
 
+      render(<Link target='/to/somewhere' onClick={onClick} />)
       userEvent.click(screen.getByRole('button'))
 
       expect(handler).toHaveBeenCalledTimes(1)
