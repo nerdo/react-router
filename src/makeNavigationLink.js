@@ -12,5 +12,7 @@ export const makeNavigationLink = ({ router, ...args }) => {
       }
     }
   }
-  return makeLink({ makeHandler, ...args })
+  const { baseProps = {}, ...passThroughArgs } = args
+  baseProps['data-relative-to'] = () => router.getCurrentBaseId()
+  return makeLink({ makeHandler, baseProps, ...passThroughArgs })
 }

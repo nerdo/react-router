@@ -19,14 +19,19 @@ describe('makeNavigationLink()', () => {
       const navigate = jest.fn()
       const router = {
         makeNavigationFunction: () => navigate,
-        getCurrentBaseId: () => ''
+        getCurrentBaseId: () => '/foo/bar'
       }
       const NavigationLink = makeNavigationLink({ router })
       render(<NavigationLink to='/a/b/c' />)
 
-      userEvent.click(screen.getByRole('button'))
+      const link = screen.getByRole('button')
+      const attributes = Array.from(link.attributes)
+        .map(attribute => ({ [attribute.name]: attribute.value }))
+        .reduce((obj, current) => ({ ...obj, ...current }), {})
+      userEvent.click(link)
 
       expect(navigate).toHaveBeenCalledTimes(1)
+      expect(attributes['data-relative-to']).toBe('/foo/bar')
     })
   })
 })
