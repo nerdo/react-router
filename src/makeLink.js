@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 
 export const makeLink = ({ tag = 'button', toPropName = 'to', makeHandler, baseProps = {} } = {}) => {
-  baseProps //?
   const markup = { tag }
   return props => {
     const [handler] = useState(makeHandler)

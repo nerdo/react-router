@@ -1,10 +1,11 @@
 import { makeLink } from './makeLink'
 import { getJoinedPath } from '@nerdo/js-routing'
 
-export const makeNavigationLink = ({ router, ...args }) => {
+export const makeNavigationLink = ({ router, isNested = false, ...args }) => {
+  const getLinkBaseId = isNested ? () => router.getCurrentBaseId() : () => router.getInitialBaseId()
   const makeHandler = () => {
     const navigate = router.makeNavigationFunction()
-    const currentBaseId = router.getCurrentBaseId()
+    const currentBaseId = getLinkBaseId()
     return (to, onClick, e) => {
       navigate(getJoinedPath(currentBaseId, to))
       if (onClick) {
@@ -13,6 +14,6 @@ export const makeNavigationLink = ({ router, ...args }) => {
     }
   }
   const { baseProps = {}, ...passThroughArgs } = args
-  baseProps['data-relative-to'] = () => router.getCurrentBaseId()
+  baseProps['data-relative-to'] = () => getLinkBaseId()
   return makeLink({ makeHandler, baseProps, ...passThroughArgs })
 }
