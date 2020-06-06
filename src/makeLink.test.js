@@ -37,8 +37,16 @@ describe('makeLink()', () => {
 
     it('should pass props through', () => {
       const Link = makeLink()
-      render(<Link data-testid='the-link' />)
-      expect(screen.getByTestId('the-link')).toBeInTheDocument()
+      render(<Link data-testid='the-link' to='/some/where' />)
+
+      const link = screen.getByTestId('the-link')
+      const attributes = Array.from(link.attributes)
+        .map(attribute => ({ [attribute.name]: attribute.value }))
+        .reduce((obj, current) => ({ ...obj, ...current }), {})
+
+      expect(link).toBeInTheDocument()
+      expect(attributes['to']).toBeUndefined()
+      expect(attributes['data-to']).toBe('/some/where')
     })
 
     it('should call makeHandler once for each link', () => {
@@ -75,11 +83,18 @@ describe('makeLink()', () => {
       const Link = makeLink({ makeHandler, toPropName: 'target' })
 
       render(<Link target='/to/somewhere' onClick={onClick} />)
-      userEvent.click(screen.getByRole('button'))
+      const link = screen.getByRole('button')
+      const attributes = Array.from(link.attributes)
+        .map(attribute => ({ [attribute.name]: attribute.value }))
+        .reduce((obj, current) => ({ ...obj, ...current }), {})
+
+      userEvent.click(link)
 
       expect(handler).toHaveBeenCalledTimes(1)
       expect(handler).toHaveBeenLastCalledWith('/to/somewhere', onClick, expect.objectContaining({}))
       expect(onClick).not.toHaveBeenCalled()
+      expect(attributes['target']).toBeUndefined()
+      expect(attributes['data-target']).toBe('/to/somewhere')
     })
   })
 })
