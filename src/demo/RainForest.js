@@ -38,12 +38,9 @@ export const RainForest = ({ router = makeReactUrlRouter() }) => {
     return <Loading />
   }
 
-  router.Link = router.makeNavigationLink()
-  router.NestedLink = router.makeNavigationLink({ context: 'nest' })
-  const { useUrlRouting, Link } = router
-
+  const { useUrlRouting, makeNavigationLink } = router
   const page = useUrlRouting(routes)
-
+  const Link = makeNavigationLink()
   return (
     <RainForestRouterContext.Provider value={router}>
       <h1>Rain Forest - The Online Shoppping Mega-Marketplace!</h1>

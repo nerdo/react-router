@@ -9,9 +9,9 @@ const routes = [
 ]
 
 export const LiveStream = ({ streamId, router = useContext(RainForestRouterContext) }) => {
-  const { useUrlRouting, NestedLink, Link } = router
+  const { useUrlRouting, makeNavigationLink } = router
   const child = useUrlRouting(routes)
-
+  const Link = makeNavigationLink()
   return (
     <>
       <h1>Rain Forest Live Fitness</h1>
