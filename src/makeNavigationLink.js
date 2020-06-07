@@ -21,6 +21,7 @@ export const makeNavigationLink = ({ router, context = 'current', ...args }) => 
   const makeHandler = () => {
     const navigate = router.makeNavigationFunction()
     const contextualBaseId = getContextualBaseId()
+    console.log(`setting contextualBaseId in makeHandler to ${contextualBaseId}`)
     return (to, onClick, e) => {
       navigate(getJoinedPath(contextualBaseId, to))
       if (onClick) {
@@ -29,6 +30,10 @@ export const makeNavigationLink = ({ router, context = 'current', ...args }) => 
     }
   }
   const { baseProps = {}, ...passThroughArgs } = args
-  baseProps['data-relative-to'] = () => getContextualBaseId()
+  baseProps['data-relative-to'] = () => {
+    const c = getContextualBaseId()
+    console.log(`setting data-relative-to to ${c}`)
+    return c
+  }
   return makeLink({ makeHandler, baseProps, ...passThroughArgs })
 }

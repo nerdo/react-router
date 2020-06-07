@@ -42,17 +42,19 @@ describe('RainForest', () => {
   })
 
   describe('nested navigation', () => {
-    it('should render correctly', async () => {
+    it.only('should render correctly', async () => {
       render(<RainForest />)
 
       userEvent.click(screen.getByRole('button', { name: 'Live Streams' }))
       expect(screen.getByRole('heading', { name: 'Live Streams' })).toBeInTheDocument()
 
+      console.log('FIRST')
       userEvent.click(screen.getByRole('button', { name: 'Rain Forest Live Fitness' }))
       expect(screen.getByRole('heading', { name: 'Rain Forest Live Fitness' })).toBeInTheDocument()
       expect(screen.getByText('ba9ec13d-0327-461e-9aff-9d7c024bcb74')).toBeInTheDocument()
 
       // Make sure that clicking on a nest multiple times doesn't result in any weird behavior (this covers a bug)
+      console.log('SECOND')
       userEvent.click(screen.getByRole('button', { name: 'Rain Forest Live Fitness' }))
       const link = screen.getByRole('button', { name: 'Rain Forest Live Fitness' })
       const attributes = Array.from(link.attributes)
@@ -61,6 +63,7 @@ describe('RainForest', () => {
       expect(attributes['data-relative-to']).not.toBe('/live/broadcast/ba9ec13d-0327-461e-9aff-9d7c024bcb74')
       expect(attributes['data-relative-to']).toBe('/live')
 
+      console.log('AFTER')
       userEvent.click(screen.getByRole('button', { name: 'Technical Stream Details' }))
       expect(await screen.findByText('technical: 1080p')).toBeInTheDocument()
 
