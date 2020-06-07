@@ -42,7 +42,7 @@ describe('RainForest', () => {
   })
 
   describe('nested navigation', () => {
-    it('should render correctly', () => {
+    it('should render correctly', async () => {
       render(<RainForest />)
 
       userEvent.click(screen.getByRole('button', { name: 'Live Streams' }))
@@ -51,6 +51,18 @@ describe('RainForest', () => {
       userEvent.click(screen.getByRole('button', { name: 'Rain Forest Live Fitness' }))
       expect(screen.getByRole('heading', { name: 'Rain Forest Live Fitness' })).toBeInTheDocument()
       expect(screen.getByText('ba9ec13d-0327-461e-9aff-9d7c024bcb74')).toBeInTheDocument()
+
+      // Make sure that clicking on a nest multiple times doesn't result in any weird behavior (this covers a bug)
+      userEvent.click(screen.getByRole('button', { name: 'Rain Forest Live Fitness' }))
+      const link = screen.getByRole('button', { name: 'Rain Forest Live Fitness' })
+      const attributes = Array.from(link.attributes)
+        .map(attribute => ({ [attribute.name]: attribute.value }))
+        .reduce((obj, current) => ({ ...obj, ...current }), {})
+      expect(attributes['data-relative-to']).not.toBe('/live/broadcast/ba9ec13d-0327-461e-9aff-9d7c024bcb74')
+      expect(attributes['data-relative-to']).toBe('/live')
+
+      userEvent.click(screen.getByRole('button', { name: 'Technical Stream Details' }))
+      expect(await screen.findByText('technical: 1080p')).toBeInTheDocument()
 
       // Navigating to a non-nest after navigating to a nest should work with no side-effects...
       userEvent.click(screen.getByRole('button', { name: 'Home' }))
