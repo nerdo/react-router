@@ -14,7 +14,7 @@
   ],
   "scripts": {
     "test": "jest",
-    "dev": "parcel serve --cache-dir tmp/parcel-cache dev/index.html --open",
+    "dev": "parcel serve --cache-dir tmp/parcel-cache dev/index.html",
     "build": "parcel build --cache-dir tmp/parcel-cache src/index.js",
     "watch": "parcel watch --cache-dir tmp/parcel-cache src/index.js",
     "bundle-analyzer": "source-map-explorer dist/index.js dist/index.js.map --html tmp/bundle-analyzer.html && open-cli tmp/bundle-analyzer.html",
