@@ -21,6 +21,11 @@ describe('makeLink()', () => {
       const Link = makeLink({ tag: 'ul' })
       render(<Link />)
       expect(screen.getByRole('list')).toBeInTheDocument()
+
+      // allow the tag to be overridden at render-time
+      expect(screen.queryByRole('button')).not.toBeInTheDocument()
+      render(<Link tag='button' />)
+      expect(screen.getByRole('button')).toBeInTheDocument()
     })
 
     it('should render whatever component is passed in as a tag', () => {
