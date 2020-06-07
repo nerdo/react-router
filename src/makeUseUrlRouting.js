@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import { getJoinedPath } from '@nerdo/js-routing'
 
 export const makeUseUrlRouting = ({ jsRouter }) => (routes) => {
   const [, setNavigationTarget] = useState(void 0)
