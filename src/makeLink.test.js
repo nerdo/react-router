@@ -20,13 +20,13 @@ describe('makeLink()', () => {
     it('should render whatever tag is passed in', () => {
       const Link = makeLink({ tag: 'ul' })
       render(<Link />)
-      expect(screen.getByRole('list'))
+      expect(screen.getByRole('list')).toBeInTheDocument()
     })
 
     it('should render whatever component is passed in as a tag', () => {
       const Link = makeLink({ tag: props => <ul {...props}>{props.children}</ul> })
       render(<Link />)
-      expect(screen.getByRole('list'))
+      expect(screen.getByRole('list')).toBeInTheDocument()
     })
 
     it('should pass children through', () => {
