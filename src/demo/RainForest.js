@@ -39,7 +39,7 @@ export const RainForest = ({ router = makeReactUrlRouter() }) => {
   }
 
   router.Link = router.makeNavigationLink()
-  router.NestedLink = router.makeNavigationLink({ isNested: true })
+  router.NestedLink = router.makeNavigationLink({ context: 'nest' })
   const { useUrlRouting, Link } = router
 
   const page = useUrlRouting(routes)

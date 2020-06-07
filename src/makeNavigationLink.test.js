@@ -15,34 +15,58 @@ describe('makeNavigationLink()', () => {
     expect(Link).toBeInstanceOf(Function)
   })
 
-  describe('rendering the link', () => {
-    describe('not nested (default)', () => {
-      it('should render with data-relative-to attribute from the initial base id', () => {
-        const router = {
-          makeNavigationFunction: () => () => {},
-          getInitialBaseId: () => '/alpha/beta',
-          getCurrentBaseId: () => '/foo/bar'
-        }
-        const NavigationLink = makeNavigationLink({ router })
+  describe('rendering the link within context', () => {
+    describe('current', () => {
+      describe('(default)', () => {
+        it('should render with data-relative-to attribute from the current base id', () => {
+          const router = {
+            makeNavigationFunction: () => () => { },
+            getInitialBaseId: () => '/initial',
+            getCurrentBaseId: () => '/current',
+            getNestedBaseId: () => '/nested'
+          }
+          const NavigationLink = makeNavigationLink({ router })
 
-        render(<NavigationLink to='/a/b/c' />)
+          render(<NavigationLink to='/a/b/c' />)
 
-        const link = screen.getByRole('button')
-        const attributes = Array.from(link.attributes)
-          .map(attribute => ({ [attribute.name]: attribute.value }))
-          .reduce((obj, current) => ({ ...obj, ...current }), {})
-        expect(attributes['data-relative-to']).toBe('/alpha/beta')
+          const link = screen.getByRole('button')
+          const attributes = Array.from(link.attributes)
+            .map(attribute => ({ [attribute.name]: attribute.value }))
+            .reduce((obj, current) => ({ ...obj, ...current }), {})
+          expect(attributes['data-relative-to']).toBe('/current')
+        })
+      })
+
+      describe('(explicit)', () => {
+        it('should render with data-relative-to attribute from the current base id', () => {
+          const router = {
+            makeNavigationFunction: () => () => { },
+            getInitialBaseId: () => '/initial',
+            getCurrentBaseId: () => '/current',
+            getNestedBaseId: () => '/nested'
+          }
+          const NavigationLink = makeNavigationLink({ router, context: 'current' })
+
+          render(<NavigationLink to='/a/b/c' />)
+
+          const link = screen.getByRole('button')
+          const attributes = Array.from(link.attributes)
+            .map(attribute => ({ [attribute.name]: attribute.value }))
+            .reduce((obj, current) => ({ ...obj, ...current }), {})
+          expect(attributes['data-relative-to']).toBe('/current')
+        })
       })
     })
 
-    describe('not nested (explicit)', () => {
+    describe('base', () => {
       it('should render with data-relative-to attribute from the initial base id', () => {
         const router = {
-          makeNavigationFunction: () => () => {},
-          getInitialBaseId: () => '/alpha/beta',
-          getCurrentBaseId: () => '/foo/bar'
+          makeNavigationFunction: () => () => { },
+          getInitialBaseId: () => '/initial',
+          getCurrentBaseId: () => '/current',
+          getNestedBaseId: () => '/nested'
         }
-        const NavigationLink = makeNavigationLink({ router, isNested: false })
+        const NavigationLink = makeNavigationLink({ router, context: 'base' })
 
         render(<NavigationLink to='/a/b/c' />)
 
@@ -50,18 +74,19 @@ describe('makeNavigationLink()', () => {
         const attributes = Array.from(link.attributes)
           .map(attribute => ({ [attribute.name]: attribute.value }))
           .reduce((obj, current) => ({ ...obj, ...current }), {})
-        expect(attributes['data-relative-to']).toBe('/alpha/beta')
+        expect(attributes['data-relative-to']).toBe('/initial')
       })
     })
 
-    describe('nested', () => {
-      it('should render with data-relative-to attribute from the initial base id', () => {
+    describe('nest', () => {
+      it('should render with data-relative-to attribute from the nested base id', () => {
         const router = {
-          makeNavigationFunction: () => () => {},
-          getInitialBaseId: () => '/alpha/beta',
-          getCurrentBaseId: () => '/foo/bar'
+          makeNavigationFunction: () => () => { },
+          getInitialBaseId: () => '/initial',
+          getCurrentBaseId: () => '/current',
+          getNestedBaseId: () => '/nested'
         }
-        const NavigationLink = makeNavigationLink({ router, isNested: true })
+        const NavigationLink = makeNavigationLink({ router, context: 'nest' })
 
         render(<NavigationLink to='/a/b/c' />)
 
@@ -69,7 +94,27 @@ describe('makeNavigationLink()', () => {
         const attributes = Array.from(link.attributes)
           .map(attribute => ({ [attribute.name]: attribute.value }))
           .reduce((obj, current) => ({ ...obj, ...current }), {})
-        expect(attributes['data-relative-to']).toBe('/foo/bar')
+        expect(attributes['data-relative-to']).toBe('/nested')
+      })
+    })
+
+    describe('absolute', () => {
+      it('should render with data-relative-to attribute set to /', () => {
+        const router = {
+          makeNavigationFunction: () => () => { },
+          getInitialBaseId: () => '/initial',
+          getCurrentBaseId: () => '/current',
+          getNestedBaseId: () => '/nested'
+        }
+        const NavigationLink = makeNavigationLink({ router, context: 'absolute' })
+
+        render(<NavigationLink to='/a/b/c' />)
+
+        const link = screen.getByRole('button')
+        const attributes = Array.from(link.attributes)
+          .map(attribute => ({ [attribute.name]: attribute.value }))
+          .reduce((obj, current) => ({ ...obj, ...current }), {})
+        expect(attributes['data-relative-to']).toBe('/')
       })
     })
   })
@@ -80,7 +125,8 @@ describe('makeNavigationLink()', () => {
       const router = {
         makeNavigationFunction: () => navigate,
         getInitialBaseId: () => '',
-        getCurrentBaseId: () => '/foo/bar'
+        getCurrentBaseId: () => '/nested',
+        getNestedBaseId: () => '/nested'
       }
       const NavigationLink = makeNavigationLink({ router })
       render(<NavigationLink to='/a/b/c' />)
