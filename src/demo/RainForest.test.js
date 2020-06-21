@@ -69,4 +69,19 @@ describe('RainForest', () => {
       expect(screen.getByRole('heading', { name: 'Home' })).toBeInTheDocument()
     })
   })
+
+  describe('history navigation', () => {
+    it('should navigate through history properly', () => {
+      render(<RainForest />)
+      userEvent.click(screen.getByRole('button', { name: 'Live Streams' }))
+      userEvent.click(screen.getByRole('button', { name: 'Rain Forest Live Fitness' }))
+      userEvent.click(screen.getByRole('button', { name: 'Rain Forest Live Fitness' }))
+      userEvent.click(screen.getByRole('button', { name: 'Technical Stream Details' }))
+      userEvent.click(screen.getByRole('button', { name: 'Home' }))
+
+      history.go(-1)
+
+      expect(window.location.pathname).toBe('/live/broadcast/ba9ec13d-0327-461e-9aff-9d7c024bcb74/details/technical')
+    })
+  })
 })
