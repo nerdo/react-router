@@ -5,7 +5,6 @@ import { makeNavigationLink } from './makeNavigationLink'
 export const makeReactUrlRouter = args => {
     const jsRouter = makeUrlRouter(args)
     const useUrlRouting = makeUseUrlRouting({ jsRouter })
-
     const reactUrlRouter = {
         useUrlRouting,
         makeNavigationFunction: () => jsRouter.makeRouterNavigationFunction(jsRouter),
