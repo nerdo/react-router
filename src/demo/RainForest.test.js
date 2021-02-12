@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, screen, act } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 import '@testing-library/jest-dom/extend-expect'
 import userEvent from '@testing-library/user-event'
 import { RainForest } from './RainForest'
@@ -35,7 +35,8 @@ describe('RainForest', () => {
 
       expect(await screen.findByText('PBP-2020-01')).toBeInTheDocument()
 
-      await act(async () => router.navigate(`${router.history.current.id}?color=black&size=15`))
+      router.navigate(`${router.history.current.id}?color=black&size=15`)
+
       expect(await screen.findByText('color=black')).toBeInTheDocument()
       expect(await screen.findByText('size=15')).toBeInTheDocument()
     })
@@ -56,7 +57,7 @@ describe('RainForest', () => {
       userEvent.click(screen.getByRole('button', { name: 'Rain Forest Live Fitness' }))
       const link = screen.getByRole('button', { name: 'Rain Forest Live Fitness' })
       const attributes = Array.from(link.attributes)
-        .map(attribute => ({ [attribute.name]: attribute.value }))
+        .map((attribute) => ({ [attribute.name]: attribute.value }))
         .reduce((obj, current) => ({ ...obj, ...current }), {})
       expect(attributes['data-relative-to']).not.toBe('/live/broadcast/ba9ec13d-0327-461e-9aff-9d7c024bcb74')
       expect(attributes['data-relative-to']).toBe('/live')
@@ -71,17 +72,27 @@ describe('RainForest', () => {
   })
 
   describe('history navigation', () => {
-    it('should navigate through history properly', () => {
+    it('should navigate through history properly', async () => {
       render(<RainForest />)
+
       userEvent.click(screen.getByRole('button', { name: 'Live Streams' }))
       userEvent.click(screen.getByRole('button', { name: 'Rain Forest Live Fitness' }))
       userEvent.click(screen.getByRole('button', { name: 'Rain Forest Live Fitness' }))
       userEvent.click(screen.getByRole('button', { name: 'Technical Stream Details' }))
       userEvent.click(screen.getByRole('button', { name: 'Home' }))
+      await waitFor(() => expect(window.location.pathname).toBe('/'))
 
-      history.go(-1)
+      window.history.back()
+      await waitFor(() => expect(window.location.pathname).toBe('/live/broadcast/ba9ec13d-0327-461e-9aff-9d7c024bcb74/details/technical'))
 
-      expect(window.location.pathname).toBe('/live/broadcast/ba9ec13d-0327-461e-9aff-9d7c024bcb74/details/technical')
+      window.history.back()
+      await waitFor(() => expect(window.location.pathname).toBe('/live/broadcast/ba9ec13d-0327-461e-9aff-9d7c024bcb74'))
+
+      window.history.forward()
+      await waitFor(() => expect(window.location.pathname).toBe('/live/broadcast/ba9ec13d-0327-461e-9aff-9d7c024bcb74/details/technical'))
+
+      window.history.forward()
+      await waitFor(() => expect(window.location.pathname).toBe('/'))
     })
   })
 })
