@@ -2,8 +2,10 @@ import { useState, useEffect } from 'react'
 
 export const makeUseUrlRouting = ({ jsRouter }) => (routes) => {
   const [, setNavigationTarget] = useState(void 0)
-
-  jsRouter.history.events.once('navigation', setNavigationTarget)
+  useEffect(() => {
+    jsRouter.history.events.on('navigation', setNavigationTarget)
+    return () => jsRouter.history.events.off('navigation', setNavigationTarget)
+  })
 
   useEffect(jsRouter.commitRouting)
 
