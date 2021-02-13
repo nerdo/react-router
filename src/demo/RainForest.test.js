@@ -75,12 +75,10 @@ describe('RainForest', () => {
     it('should navigate through history properly', async () => {
       render(<RainForest />)
 
+      expect(screen.getByRole('heading', { name: 'Home' })).toBeInTheDocument()
+
       userEvent.click(screen.getByRole('button', { name: 'Live Streams' }))
       expect(screen.getByRole('heading', { name: 'Live Streams' })).toBeInTheDocument()
-
-      userEvent.click(screen.getByRole('button', { name: 'Rain Forest Live Fitness' }))
-      expect(screen.getByRole('heading', { name: 'Rain Forest Live Fitness' })).toBeInTheDocument()
-      expect(screen.getByText('ba9ec13d-0327-461e-9aff-9d7c024bcb74')).toBeInTheDocument()
 
       userEvent.click(screen.getByRole('button', { name: 'Rain Forest Live Fitness' }))
       expect(screen.getByRole('heading', { name: 'Rain Forest Live Fitness' })).toBeInTheDocument()
@@ -116,14 +114,16 @@ describe('RainForest', () => {
       expect(screen.queryByRole('heading', { name: 'Home' })).toBeInTheDocument()
 
       act(() => window.history.back())
+      await waitFor(() => expect(window.location.pathname).toBe('/live/broadcast/ba9ec13d-0327-461e-9aff-9d7c024bcb74/details/technical'))
       expect(await screen.findByText('technical: 1080p')).toBeInTheDocument()
+
       act(() => window.history.back())
+      await waitFor(() => expect(window.location.pathname).toBe('/live/broadcast/ba9ec13d-0327-461e-9aff-9d7c024bcb74'))
       expect(screen.getByRole('heading', { name: 'Rain Forest Live Fitness' })).toBeInTheDocument()
       expect(screen.getByText('ba9ec13d-0327-461e-9aff-9d7c024bcb74')).toBeInTheDocument()
+
       act(() => window.history.back())
-      // expect(screen.getByRole('heading', { name: 'Rain Forest Live Fitness' })).toBeInTheDocument()
-      // expect(screen.getByText('ba9ec13d-0327-461e-9aff-9d7c024bcb74')).toBeInTheDocument()
-      // act(() => window.history.back())
+      await waitFor(() => expect(window.location.pathname).toBe('/live'))
       expect(screen.getByRole('heading', { name: 'Live Streams' })).toBeInTheDocument()
     })
   })
