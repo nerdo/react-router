@@ -76,23 +76,44 @@ describe('RainForest', () => {
       render(<RainForest />)
 
       userEvent.click(screen.getByRole('button', { name: 'Live Streams' }))
+      expect(screen.getByRole('heading', { name: 'Live Streams' })).toBeInTheDocument()
+
       userEvent.click(screen.getByRole('button', { name: 'Rain Forest Live Fitness' }))
+      expect(screen.getByRole('heading', { name: 'Rain Forest Live Fitness' })).toBeInTheDocument()
+      expect(screen.getByText('ba9ec13d-0327-461e-9aff-9d7c024bcb74')).toBeInTheDocument()
+
       userEvent.click(screen.getByRole('button', { name: 'Rain Forest Live Fitness' }))
+      expect(screen.getByRole('heading', { name: 'Rain Forest Live Fitness' })).toBeInTheDocument()
+      expect(screen.getByText('ba9ec13d-0327-461e-9aff-9d7c024bcb74')).toBeInTheDocument()
+
       userEvent.click(screen.getByRole('button', { name: 'Technical Stream Details' }))
+      expect(await screen.findByText('technical: 1080p')).toBeInTheDocument()
+
       userEvent.click(screen.getByRole('button', { name: 'Home' }))
+      expect(screen.getByRole('heading', { name: 'Home' })).toBeInTheDocument()
+
       await waitFor(() => expect(window.location.pathname).toBe('/'))
 
       window.history.back()
       await waitFor(() => expect(window.location.pathname).toBe('/live/broadcast/ba9ec13d-0327-461e-9aff-9d7c024bcb74/details/technical'))
+      expect(screen.queryByText('technical: 1080p')).toBeInTheDocument()
+      expect(screen.queryByRole('heading', { name: 'Home' })).not.toBeInTheDocument()
 
       window.history.back()
       await waitFor(() => expect(window.location.pathname).toBe('/live/broadcast/ba9ec13d-0327-461e-9aff-9d7c024bcb74'))
+      expect(screen.getByRole('heading', { name: 'Rain Forest Live Fitness' })).toBeInTheDocument()
+      expect(screen.getByText('ba9ec13d-0327-461e-9aff-9d7c024bcb74')).toBeInTheDocument()
+      expect(screen.queryByText('technical: 1080p')).not.toBeInTheDocument()
 
       window.history.forward()
       await waitFor(() => expect(window.location.pathname).toBe('/live/broadcast/ba9ec13d-0327-461e-9aff-9d7c024bcb74/details/technical'))
+      expect(screen.getByRole('heading', { name: 'Rain Forest Live Fitness' })).toBeInTheDocument()
+      expect(screen.getByText('ba9ec13d-0327-461e-9aff-9d7c024bcb74')).toBeInTheDocument()
+      expect(screen.getByText('technical: 1080p')).toBeInTheDocument()
 
       window.history.forward()
       await waitFor(() => expect(window.location.pathname).toBe('/'))
+      expect(screen.queryByRole('heading', { name: 'Home' })).toBeInTheDocument()
     })
   })
 })
