@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, screen, waitFor } from '@testing-library/react'
+import { render, screen, waitFor, act } from '@testing-library/react'
 import '@testing-library/jest-dom/extend-expect'
 import userEvent from '@testing-library/user-event'
 import { RainForest } from './RainForest'
@@ -94,26 +94,37 @@ describe('RainForest', () => {
 
       await waitFor(() => expect(window.location.pathname).toBe('/'))
 
-      window.history.back()
+      act(() => window.history.back())
       await waitFor(() => expect(window.location.pathname).toBe('/live/broadcast/ba9ec13d-0327-461e-9aff-9d7c024bcb74/details/technical'))
       expect(screen.queryByText('technical: 1080p')).toBeInTheDocument()
       expect(screen.queryByRole('heading', { name: 'Home' })).not.toBeInTheDocument()
 
-      window.history.back()
+      act(() => window.history.back())
       await waitFor(() => expect(window.location.pathname).toBe('/live/broadcast/ba9ec13d-0327-461e-9aff-9d7c024bcb74'))
       expect(screen.getByRole('heading', { name: 'Rain Forest Live Fitness' })).toBeInTheDocument()
       expect(screen.getByText('ba9ec13d-0327-461e-9aff-9d7c024bcb74')).toBeInTheDocument()
       expect(screen.queryByText('technical: 1080p')).not.toBeInTheDocument()
 
-      window.history.forward()
+      act(() => window.history.forward())
       await waitFor(() => expect(window.location.pathname).toBe('/live/broadcast/ba9ec13d-0327-461e-9aff-9d7c024bcb74/details/technical'))
       expect(screen.getByRole('heading', { name: 'Rain Forest Live Fitness' })).toBeInTheDocument()
       expect(screen.getByText('ba9ec13d-0327-461e-9aff-9d7c024bcb74')).toBeInTheDocument()
       expect(screen.getByText('technical: 1080p')).toBeInTheDocument()
 
-      window.history.forward()
+      act(() => window.history.forward())
       await waitFor(() => expect(window.location.pathname).toBe('/'))
       expect(screen.queryByRole('heading', { name: 'Home' })).toBeInTheDocument()
+
+      act(() => window.history.back())
+      expect(await screen.findByText('technical: 1080p')).toBeInTheDocument()
+      act(() => window.history.back())
+      expect(screen.getByRole('heading', { name: 'Rain Forest Live Fitness' })).toBeInTheDocument()
+      expect(screen.getByText('ba9ec13d-0327-461e-9aff-9d7c024bcb74')).toBeInTheDocument()
+      act(() => window.history.back())
+      // expect(screen.getByRole('heading', { name: 'Rain Forest Live Fitness' })).toBeInTheDocument()
+      // expect(screen.getByText('ba9ec13d-0327-461e-9aff-9d7c024bcb74')).toBeInTheDocument()
+      // act(() => window.history.back())
+      expect(screen.getByRole('heading', { name: 'Live Streams' })).toBeInTheDocument()
     })
   })
 })
